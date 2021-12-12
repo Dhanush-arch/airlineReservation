@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Airline Reservation System</title>
+		<style>
+            /* #resultRow:hover{
+                background-color: rgb(116, 155, 192);
+            } */
+		</style>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	</head>
+	<body>
+        <div class="container mt-4">
+            <h1 class="fs-3">Ticket Booking System</h1>
+            <form action="/search" method="post">
+                <div class="row">
+                    <div class="col">
+                        <label class="mb-2 form-label" for="source">Source</label>
+                        <% if(id) { %> 
+                        <select name="source" class="form-select" aria-label="Default select example" required>
+                            <!-- <option disabled selected value>--</option> -->
+                            <% for(let s in source){ %>
+                                <% if(xRsource == source[s]) { %>
+                                    <option selected value=<%= source[s] %> ><%= source[s] %> </option>
+                                <% } else {%> 
+                                <option value=<%= source[s] %> ><%= source[s] %> </option>
+                            <%} }  %>                            
+                        </select>  
+                        <% }  else { %> 
+                            <select name="source" class="form-select" aria-label="Default select example" required>
+                                <option disabled selected value>--</option>
+                                <% for(let s in source){ %>
+                                    <option value=<%= source[s] %> ><%= source[s] %> </option>
+                                <% }  %>                            
+                            </select>  
+                        <% } %> 
+                    </div>
+                    <div class="col">
+                        <label class="mb-2 form-label" for="Destination">Destination</label>
+
+                        <% if(id) { %> 
+                            <select name="destination" class="form-select" aria-label="Default select example" required>
+                                <!-- <option disabled selected value>--</option> -->
+                                <% for(let s in destination){ %>
+                                    <% if(xRdest == destination[s]) { %>
+                                        <option selected value=<%= destination[s] %> ><%= destination[s] %> </option>
+                                    <% } else {%> 
+                                    <option value=<%= destination[s] %> ><%= destination[s] %> </option>
+                                <%} }  %>                            
+                            </select>  
+                            <% }  else { %> 
+                                <select name="destination" class="form-select" aria-label="Default select example" required>
+                                    <option disabled selected value>--</option>
+                                    <% for(let s in destination){ %>
+                                        <option value=<%= destination[s] %> ><%= destination[s] %> </option>
+                                    <% }  %>                            
+                                </select>  
+                            <% } %> 
+                    </div>
+                    <div class="col">
+                        <label class="mb-2 form-label" for="Destination">Date of Flight</label>
+                        <input class = "form-control" type = "date" name = "depDate" required>
+                    </div>
+                </div>  
+                <div class="row mt-4">
+                    <div class="col text-center">
+                        <button type="submit" class="btn btn-primary mx-auto">Search Flights</button>
+                    </div>
+                </div>    
+            </form>  
+        
+            <% if(id) { 
+                if(id.length == 0){%>
+                    <h5 class="text-center mt-4">No Flights available right now. Try again later!</h5>
+            <% } else { %>
+                
+                <div class="row mt-4 mb-4 pb-2 text-center">
+                    <div class="col">
+                        <h5>Source and Destination</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Date and Time</h5>
+                    </div>
+                    <div class="col">
+                        <h5>Seats Available</h5>
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+                <% 
+                for(let i in id){%> 
+                    <div class="row text-center px-1 py-4" style="border-bottom: solid 1px grey ;" id="resultRow">
+                        <div class="col">
+                            <%= xRsource %> to <%= xRdest %>    
+                        </div>
+                        <div class="col">
+                            <%= date[i] %>    
+                            <%= time[i] %>
+                        </div>
+                        <div class="col">
+                            <%= seat[i] %>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-primary"href=<%= `/book/${id[i]}` %> >Book</a>
+                        </div>
+                    </div>
+            <% } } } %> 
+
+        </div>
+	</body>
+</html>
